@@ -1,6 +1,6 @@
 {
     "name":                       "sieving-wc",
-    "version":                    "0.9.1",
+    "version":                    "0.9.2",
     "description":                "Sieving Web Component",
     "keywords":                   [ "sieving", "web", "component" ],
     "browser":                    "./lib/sieving-wc.min.js",
