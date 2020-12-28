@@ -36,6 +36,7 @@
                 v-bind:class="{ focused: focused, completing: completing }">
                 <span
                     v-for="char in chars"
+                    v-bind:key="char.i"
                     v-bind:part="'char char-' + char.type"
                     v-bind:class="{
                        char: true,
@@ -69,6 +70,7 @@
             class="complete"
             v-show="completing">
             <div v-for="(item, i) of completed"
+                v-bind:key="i"
                 v-bind:ref="'item-' + i"
                 class="item"
                 v-bind:class="{ selected: i === completedSelected }"
@@ -274,20 +276,6 @@ export default {
         getQuery:   { type: Function, default: exposeMethod("getQuery$") }
     },
 
-    /*  property change reaction (import values)  */
-    watch: {
-        query: function (val) {
-            this.$refs.overlay.value = val
-            this.overlayChange()
-        },
-        complete: function (val) {
-            this.complete$ = JSON.parse(val)
-        },
-        blinkSpeed: function (val) {
-            this.blinkSpeed$ = val
-        }
-    },
-
     /*  component state data  */
     data: function () {
         return {
@@ -304,6 +292,20 @@ export default {
             completing:        false,
             completed:         [],
             completedSelected: 0
+        }
+    },
+
+    /*  property change reaction (import values)  */
+    watch: {
+        query: function (val) {
+            this.$refs.overlay.value = val
+            this.overlayChange()
+        },
+        complete: function (val) {
+            this.complete$ = JSON.parse(val)
+        },
+        blinkSpeed: function (val) {
+            this.blinkSpeed$ = val
         }
     },
 
@@ -359,26 +361,27 @@ export default {
                 const chars = token.text.split("")
                 for (let i = 0; i < chars.length; i++) {
                     this.chars.push({
+                        i:     i,
                         char:  chars[i],
                         pos:   token.pos + i,
                         type:  token.type,
                         first: i === 0,
-                        last:  i === chars.length - 1,
+                        last:  i === chars.length - 1
                     })
                 }
             }
 
             /*  adjust the canvas char first/last information  */
             for (let i = 0; i < this.chars.length; i++) {
-                if (i < this.chars.length - 1 &&
-                    this.chars[i].type === "namespace" &&
-                    this.chars[i + 1].type !== "namespace") {
+                if (i < this.chars.length - 1
+                    && this.chars[i].type === "namespace"
+                    && this.chars[i + 1].type !== "namespace") {
                     delete this.chars[i].last
                     delete this.chars[i + 1].first
                 }
-                if (i > 0 &&
-                    this.chars[i - 1].type !== "boost" &&
-                    this.chars[i].type === "boost") {
+                if (i > 0
+                    && this.chars[i - 1].type !== "boost"
+                    && this.chars[i].type === "boost") {
                     delete this.chars[i - 1].last
                     delete this.chars[i].first
                 }
@@ -411,9 +414,9 @@ export default {
             this.$refs.frame.style.width  = width  + "px"
 
             /*  calculate the inner width  */
-            width  -= parseInt(style.getPropertyValue("padding-left")  .replace(/px$/, ""))
-            width  -= parseInt(style.getPropertyValue("padding-right") .replace(/px$/, ""))
-            height -= parseInt(style.getPropertyValue("padding-top")   .replace(/px$/, ""))
+            width  -= parseInt(style.getPropertyValue("padding-left").replace(/px$/, ""))
+            width  -= parseInt(style.getPropertyValue("padding-right").replace(/px$/, ""))
+            height -= parseInt(style.getPropertyValue("padding-top").replace(/px$/, ""))
             height -= parseInt(style.getPropertyValue("padding-bottom").replace(/px$/, ""))
 
             /*  synchronize the inner canvas and complete areas  */
@@ -455,7 +458,6 @@ export default {
                     ev.stopPropagation()
                     const parent = this.$refs.complete
                     const item = this.$refs[`item-${this.completedSelected}`][0]
-                    const style = window.getComputedStyle(item)
                     if (item.offsetTop < parent.scrollTop)
                         parent.scrollTop = item.offsetTop
                 }
@@ -467,7 +469,6 @@ export default {
                     ev.stopPropagation()
                     const parent = this.$refs.complete
                     const item = this.$refs[`item-${this.completedSelected}`][0]
-                    const style = window.getComputedStyle(item)
                     if (item.offsetTop + item.clientHeight > parent.scrollTop + parent.clientHeight)
                         parent.scrollTop = item.offsetTop + item.clientHeight - parent.clientHeight
                 }
@@ -528,7 +529,7 @@ export default {
             /*  determine range and cursor  */
             let begin = this.$refs.overlay.selectionStart
             const end = this.$refs.overlay.selectionEnd
-            let cursor = end
+            const cursor = end
             if (begin === end)
                 while (begin > 0 && !query.substring(begin - 1, begin).match(/^\s+$/))
                     begin--
@@ -538,7 +539,7 @@ export default {
         /*  update completion items  */
         updateComplete () {
             /*  determine current completion range in overlay  */
-            const { begin, cursor, end } = this.completeRange()
+            const { begin, end } = this.completeRange()
 
             /*  determine current completion query  */
             let query = this.$refs.overlay.value
@@ -565,9 +566,9 @@ export default {
 
             /*  ensure the selection is still valid (again)  */
             if (this.completedSelected < 0)
-               this.completedSelected = 0
+                this.completedSelected = 0
             if (this.completedSelected >= this.completed.length)
-               this.completedSelected = this.completed.length - 1
+                this.completedSelected = this.completed.length - 1
         }
     }
 }
