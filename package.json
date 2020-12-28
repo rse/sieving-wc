@@ -42,6 +42,7 @@
         "build:css":              "shx cp src/sieving-wc.css lib/",
         "build:dev":              "npm-run-all -s build build:js:dev",
         "build:js:dev":           "vue-cli-service build --target wc --inline-vue --name sieving-wc --formats umd-min --dest lib --mode development --watch --no-clean src/*.vue",
-        "lint":                   "eslint --config eslint.yaml --ext vue src/*.vue"
+        "lint":                   "eslint --config eslint.yaml --ext vue src/*.vue",
+        "prepublishOnly":         "npm run lint"
     }
 }
