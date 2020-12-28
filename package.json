@@ -3,8 +3,8 @@
     "version":                    "0.9.1",
     "description":                "Sieving Web Component",
     "keywords":                   [ "sieving", "web", "component" ],
-    "browser":                    "./lib/sieving-wc.browser.js",
-    "main":                       "./lib/sieving-wc.node.js",
+    "browser":                    "./lib/sieving-wc.min.js",
+    "main":                       "./lib/sieving-wc.min.js",
     "repository": {
         "type":                   "git",
         "url":                    "https://github.com/rse/sieving-wc.git"
