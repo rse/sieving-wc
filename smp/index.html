@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sieving Web Component Sample</title>
+        <meta charset="UTF-8"/>
+        <script type="text/javascript" src="../lib/sieving-wc.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="../lib/sieving-wc.css">
+        <style type="text/css">
+            body {
+                margin: 20px;
+                font-size: 12pt;
+            }
+            sieving-wc {
+                font-size: 14pt;
+            }
+            sieving-wc::part(char-bareword) {
+            }
+        </style>
+    </head>
+    <body class="sieving-wc-theme-light sieving-wc-theme-boxed">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+        <p/>
+        <sieving-wc
+            id="sieving"
+            query="foo + ('foo' &quot;f\&quot;\x20oo&quot;) foo*bar /foo.*bar/, foo bar +foo -foo, foo:bar #bar, foo^ bar^42"
+        >
+            <script type="application/json">
+                { "#": [ "foo", "bar", "quux", "foo2", "foo3", "foo4", "foo5" ] }
+            </script>
+        </sieving-wc>
+
+        <script type="text/javascript">
+            let sieving = document.getElementById("sieving")
+            sieving.addEventListener("change", (ev) => {
+                let [ { query } ] = ev.detail
+                console.log("Query:", query)
+            })
+        </script>
+
+        <p/>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </body>
+</html>
