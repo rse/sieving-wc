@@ -14,8 +14,8 @@ About
 -----
 
 Sieving-WC is a Web Component for the Sieving JavaScript library.
-It provides a HTML &lt;textfield&gt; with syntax highlighting
-and tag completion.
+It provides an HTML Element compatible with the regular &lt;textarea&gt;
+but with syntax highlighting and tag completion.
 
 Installation
 ------------
